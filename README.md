@@ -1,6 +1,6 @@
 # dockerized-elasticsearch-duplicate-finder
 
-Use MinHash to find duplicates in an Elasticsearch index. At least that's the idea! It's not really working as of now...
+(try to) Use MinHash to find duplicates in an Elasticsearch index. 
 
 Run with
 
@@ -8,3 +8,6 @@ Run with
 docker-compose build
 docker-compose up
 ```
+
+The `classifier` container exposes an API that should return the ids of elements of the corpus that are near-duplicates of the query.
+At least that's the idea! Code is not really working as of now...
