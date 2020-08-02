@@ -15,4 +15,4 @@ def get_duplicate_documents(body, K, es):
     res = es.search(index='documents', body=doc)
     top_matches = [hit['_source']['_id'] for hit in res['hits']['hits']]
     top_scores = [hit['_score'] for hit in res['hits']['hits']]
-    return {'ArticleId': top_matches, 'score': top_scores}
+    return {'id': top_matches, 'score': top_scores}
