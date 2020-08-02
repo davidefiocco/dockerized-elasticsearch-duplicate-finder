@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  elasticsearch:
+    build: elasticsearch/
+    ports: 
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - deploy_network
+    container_name: elasticsearch
+
+  indexer:
+    build: indexer/
+    depends_on:
+      - elasticsearch
+    networks:
+      - deploy_network
+    container_name: indexer
+
+  classifier:
+    build: classifier/
+    depends_on:
+      - indexer
+    ports: 
+      - 8000:8000
+    networks:
+      - deploy_network
+    container_name: classifier
+
+networks:
+  deploy_network:
+    driver: bridge
