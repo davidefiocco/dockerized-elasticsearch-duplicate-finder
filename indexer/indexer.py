@@ -58,7 +58,7 @@ def create_index(client):
             },
             "mappings": {
                 "properties": {
-                    "name": {"type": "text", "analyzer": "my_analyzer"}
+                    "body": {"type": "text", "analyzer": "my_analyzer"}
                 }
             },
         },
