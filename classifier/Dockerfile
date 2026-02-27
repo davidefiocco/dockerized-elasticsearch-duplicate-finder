@@ -1,16 +1,8 @@
-# Use an official Python runtime as a parent image
-FROM tiangolo/uvicorn-gunicorn:python3.7
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
-# Set the working directory to /app
 WORKDIR /app
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
+COPY . .
 
-COPY requirements.txt /app
-
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt --trusted-host pypi.python.org
-
-# Copy the current directory contents into the container at /app
-ADD . /app
-
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
-
+CMD ["uv", "run", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,11 +1,9 @@
-def get_duplicate_documents(body, K, es):
-    doc = {
-        "_source": ["_id", "body"],
-        "size": K,
-        "query": {"match": {"body": {"query": body, "analyzer": "my_analyzer"}}},
-    }
-
-    res = es.search(index="documents", body=doc)
-    top_matches = [hit["_id"] for hit in res["hits"]["hits"]]
-    top_scores = [hit["_score"] for hit in res["hits"]["hits"]]
-    return {"id": top_matches, "score": top_scores}
+def get_duplicate_documents(body, k, es):
+    res = es.search(
+        index="documents",
+        source=["body"],
+        size=k,
+        query={"match": {"body": {"query": body, "analyzer": "my_analyzer"}}},
+    )
+    hits = res["hits"]["hits"]
+    return {"id": [h["_id"] for h in hits], "score": [h["_score"] for h in hits]}
